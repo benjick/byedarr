@@ -1,0 +1,40 @@
+{
+  "name": "byedarr",
+  "version": "1.0.0",
+  "description": "byedarr - a media manager helper",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development tsx watch src/index.ts",
+    "dev:db": "docker compose -f docker-compose.dev.yml up",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:push": "dotenv drizzle-kit push",
+    "db:migrate": "dotenv drizzle-kit migrate",
+    "db:up": "dotenv drizzle-kit up",
+    "db:generate-migrations": "dotenv drizzle-kit generate",
+    "db:validate-migrations": "pnpm db:generate-migrations | tee migrations.log | grep -q \"nothing to migrate\" || exit 1",
+    "db:studio": "dotenv drizzle-kit studio",
+    "openapi:radarr": "npx openapi-typescript https://raw.githubusercontent.com/Radarr/Radarr/develop/src/Radarr.Api.V3/openapi.json -o ./src/lib/radarr/generated.ts",
+    "openapi:sonarr": "npx openapi-typescript https://raw.githubusercontent.com/Sonarr/Sonarr/develop/src/Sonarr.Api.V3/openapi.json -o ./src/lib/sonarr/generated.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node-cron": "^3.0.11",
+    "drizzle-kit": "^0.24.2",
+    "drizzle-orm": "^0.33.0",
+    "drizzle-zod": "^0.5.1",
+    "js-yaml": "^4.1.0",
+    "node-cron": "^3.0.3",
+    "openapi-fetch": "^0.12.0",
+    "pg": "^8.12.0",
+    "pretty-bytes": "^6.1.1",
+    "typescript": "^5.6.2",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "dotenv-cli": "^7.4.2",
+    "tsx": "^4.19.1"
+  }
+}
