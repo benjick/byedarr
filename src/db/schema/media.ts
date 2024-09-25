@@ -31,10 +31,10 @@ export const mediaItems = pgTable(
     hasFile: boolean("has_file").default(false),
     imdbId: varchar("imdb_id"),
     tmdbId: integer("tmdb_id"),
-    imdbRating: real("imdb_rating"),
-    tmdbRating: real("tmdb_rating"),
+    rating: real("rating"),
     addedToManager: timestamp("added_to_manager").notNull(),
     pathOnDisk: varchar("path_on_disk"),
+    image: varchar("image"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow(),
   },
@@ -44,6 +44,7 @@ export const mediaItems = pgTable(
     managerConfigIdIdx: index("manager_config_id_idx").on(
       table.managerConfigId,
     ),
+    addedToManagerIdx: index("added_to_manager_idx").on(table.addedToManager),
     unq: unique().on(table.managerId, table.managerConfigId),
   }),
 );

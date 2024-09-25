@@ -1,0 +1,28 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      # - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+      - CONFIG_PATH=/config/config.yml
+      - DEBUG=true
+    volumes:
+      - ./config.yml:/config/config.yml
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

@@ -1,6 +1,6 @@
 import createClient, { type ClientOptions } from "openapi-fetch";
 
-import { MediaItem, MediaManager } from "../types";
+import { MediaItemInsertSchema, MediaManagerAbstract } from "../../types";
 import type { paths as Sonarr, components } from "./generated";
 
 export function createSonarrClient(clientOptions?: ClientOptions) {
@@ -11,7 +11,7 @@ export type { Sonarr };
 
 export type SonarrClient = ReturnType<typeof createSonarrClient>;
 
-export class SonarrManager extends MediaManager {
+export class SonarrManager extends MediaManagerAbstract {
   private client: SonarrClient;
 
   constructor(
@@ -24,17 +24,29 @@ export class SonarrManager extends MediaManager {
 
   async test(): Promise<void> {
     const res = await this.client.GET("/api");
-    console.log(res.data);
   }
 
-  async getAll(): Promise<MediaItem[]> {
+  async getAll(): Promise<MediaItemInsertSchema[]> {
     const res = await this.client.GET("/api/v3/series");
     return (res.data ?? []).map((item) => this.convertToMediaItem(item));
   }
 
+  async delete(id: number, addImportExclusion: boolean): Promise<void> {
+    await this.client.DELETE("/api/v3/series/{id}", {
+      params: {
+        path: {
+          id,
+        },
+        query: {
+          addImportListExclusion: addImportExclusion,
+        },
+      },
+    });
+  }
+
   private convertToMediaItem(
     item: components["schemas"]["SeriesResource"],
-  ): MediaItem {
+  ): MediaItemInsertSchema {
     if (!item.id) {
       throw new Error("Missing id, can this happen?");
     }
@@ -52,13 +64,12 @@ export class SonarrManager extends MediaManager {
       year: item.year ?? undefined,
       imdbId: item.imdbId ?? undefined,
       tmdbId: item.tmdbId ?? undefined,
-      // TODO: Unify these?
-      imdbRating: item.ratings?.value ?? undefined,
-      tmdbRating: item.ratings?.value ?? undefined,
+      rating: item.ratings?.value ?? undefined,
       pathOnDisk: item.path,
       hasFile: item.statistics?.sizeOnDisk
         ? item.statistics.sizeOnDisk > 0
         : false,
+      image: item.images?.[0]?.remoteUrl,
     };
   }
 }

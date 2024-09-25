@@ -1,4 +1,8 @@
 node_modules
 dist
 .docker
-config.yml
+/config.yml
+.env
+.env.test
+.DS_Store
+html

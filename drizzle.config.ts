@@ -1,15 +1,12 @@
 import { type Config } from "drizzle-kit";
 
-const connectionString =
-  process.env.DATABASE_URL ?? "postgres://postgres:postgres@localhost:5432/postgres";
-
-console.log("connectionString", connectionString);
+import { env } from "./src/env";
 
 export default {
   schema: ["./src/db/schema/*.ts"],
   dialect: "postgresql",
   dbCredentials: {
-    url: connectionString,
+    url: env.DATABASE_URL,
   },
   out: "./src/db/migrations",
 } satisfies Config;
