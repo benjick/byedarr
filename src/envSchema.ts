@@ -8,10 +8,7 @@ export const boolean = z.preprocess((val) => {
 export const envSchema = z.object({
   DISCORD_BOT_TOKEN: z.string(),
   CONFIG_PATH: z.string(),
-  DATABASE_URL: z
-    .string()
-    .url()
-    .default("postgres://postgres:postgres@localhost:5432/postgres"),
+  DATABASE_URL: z.string().url(),
   SKIP_MIGRATIONS: boolean.default(false),
   DRY_RUN: boolean.default(false),
   DEBUG: boolean.default(false),

@@ -48,6 +48,8 @@ discord:
   channelId: "123456" # Enable Discord developer mode and right-click the channel then press "Copy Channel ID"
 ```
 
+> ✋ The config is read on app start, so any changes will require a restart.
+
 4. `docker-compose.yml`
 
 ```yml
@@ -77,20 +79,17 @@ volumes:
   postgres_data:
 ```
 
-> ✋ The config is read on app start, so any changes will require a restart.
-
 ## Full docs
 
 ### Environment variables
 
-| Variable          | Type         | Comment                                                   |
-| ----------------- | ------------ | --------------------------------------------------------- |
-| DISCORD_BOT_TOKEN | string       | https://discord.com/developers/applications               |
-| CONFIG_PATH       | string       | Path to the configuration file, e.g. `/config/config.yml` |
-| DATABASE_URL      | string (URL) | PostgreSQL database connection URL                        |
-| DRY_RUN           | boolean      | If true, nothing is actually deleted from sonarr/radarr   |
-| DEBUG             | boolean      | If true, debug messages are printed to the console        |
-| SKIP_MIGRATIONS   | boolean      | If true, migrations are skipped                           |
+| Variable          | Type         | Comment                                                       | Default |
+| ----------------- | ------------ | ------------------------------------------------------------- | ------- |
+| DISCORD_BOT_TOKEN | string       | https://discord.com/developers/applications                   |
+| CONFIG_PATH       | string       | Path to the configuration file, e.g. `/config/config.yml`     |
+| DATABASE_URL      | string (URL) | PostgreSQL database connection URL                            |
+| DRY_RUN           | boolean      | If true, nothing is actually deleted from sonarr/radarr       | false   |
+| DEBUG             | boolean      | If true, debug messages and config are printed to the console | false   |
 
 ### `config.yml`
 
@@ -109,10 +108,13 @@ mediaManagers:
     apiKey: "xxx"
     type: "radarr" # Specifies the media manager software (radarr or sonarr)
     count: 1 # Number of media items to include in each voting round
-    weights: # Weights for each media attribute
-      age: 0.1 # Weight based on time since added to the media manager
-      size: 0.3 # Weight based on media size
-      rating: 1 # Weight based on media rating
+    # Weights for each media attribute.
+    # Higher = more impact on the score.
+    # Higher score = more likely to be scheduled for removal.
+    weights:
+      age: 0.1 # Time since added to the media manager
+      size: 0.3 # Disk space used
+      rating: 1 # Media rating (imdb/tmdb)
     addImportExclusionOnDelete: false # If true, adds deleted items to import exclusion list
 
 # Paths to ignore when processing media
