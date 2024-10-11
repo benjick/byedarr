@@ -23,6 +23,7 @@ describe("envSchema", () => {
     const res = envSchema.parse({
       DISCORD_BOT_TOKEN: "process.env.DISCORD_BOT_TOKEN",
       CONFIG_PATH: "process.env.CONFIG_PATH",
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/postgres",
     });
     expect(res.NODE_ENV).toBe("development");
     expect(res.DRY_RUN).toBe(false);

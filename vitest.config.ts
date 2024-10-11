@@ -13,6 +13,7 @@ export default defineConfig({
     reporters: ["default", "html"],
     env: {
       NODE_ENV: "test",
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/postgres",
     },
   },
 });

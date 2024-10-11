@@ -7,6 +7,8 @@ import { db } from "../../db";
 import { itemsToDelete } from "../../db/schema/voting";
 import { discordClient } from "../client";
 
+dayjs.extend(relativeTime);
+
 discordClient.once("ready", () => {
   discordClient.application?.commands.create({
     name: "listdeleted",
@@ -89,4 +91,3 @@ async function handleListToBeDeleted(interaction: CommandInteraction) {
     ephemeral: true,
   });
 }
-dayjs.extend(relativeTime);

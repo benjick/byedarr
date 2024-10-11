@@ -31,7 +31,7 @@ export async function runMigrations() {
     console.log("✅ Migrations complete!");
   } else {
     console.log(
-      "🏃‍♂️ Skipping migrations in dev mode - run manually with 'pnpm db:push'",
+      "🏃 Skipping migrations in dev mode - run manually with 'pnpm db:push'",
     );
   }
 }
