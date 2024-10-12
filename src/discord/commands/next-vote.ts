@@ -10,7 +10,7 @@ dayjs.extend(relativeTime);
 
 discordClient.once("ready", () => {
   discordClient.application?.commands.create({
-    name: "nextvote",
+    name: "next-vote",
     description: "Show the time until the next vote",
     type: ApplicationCommandType.ChatInput,
   });
@@ -22,7 +22,7 @@ discordClient.on("interactionCreate", async (interaction) => {
 
   const { commandName } = interaction;
 
-  if (commandName === "nextvote") {
+  if (commandName === "next-vote") {
     await handleNextVote(interaction);
   }
 });
