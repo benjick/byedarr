@@ -3,8 +3,8 @@ import { ApplicationCommandType, CommandInteraction } from "discord.js";
 import { config } from "../../config";
 import { discordClient } from "../client";
 
-discordClient.once("ready", () => {
-  discordClient.application?.commands.create({
+discordClient.once("ready", async () => {
+  await discordClient.application?.commands.create({
     name: "config",
     description: "Show the current config",
     type: ApplicationCommandType.ChatInput,

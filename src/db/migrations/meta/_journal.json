@@ -8,6 +8,13 @@
       "when": 1726927500269,
       "tag": "0000_dry_sage",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1728727950318,
+      "tag": "0001_quiet_black_queen",
+      "breakpoints": true
     }
   ]
 }
