@@ -36,10 +36,10 @@ async function handleVoteNow(interaction: CommandInteraction) {
     });
     return;
   }
-  await updateDatabase();
-  await determineDeletions();
   await interaction.reply({
-    content: `Created new voting session`,
+    content: `Creating new voting session`,
     ephemeral: true,
   });
+  await updateDatabase();
+  await determineDeletions();
 }
