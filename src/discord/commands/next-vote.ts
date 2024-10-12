@@ -14,7 +14,6 @@ discordClient.once("ready", () => {
     description: "Show the time until the next vote",
     type: ApplicationCommandType.ChatInput,
   });
-  console.log("✅ Next vote command registered");
 });
 
 discordClient.on("interactionCreate", async (interaction) => {
