@@ -36,6 +36,7 @@ export class RadarrManager extends MediaManagerAbstract {
         },
         query: {
           addImportExclusion,
+          deleteFiles: true,
         },
       },
     });

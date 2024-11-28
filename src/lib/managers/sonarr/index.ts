@@ -39,6 +39,7 @@ export class SonarrManager extends MediaManagerAbstract {
         },
         query: {
           addImportListExclusion: addImportExclusion,
+          deleteFiles: true,
         },
       },
     });
